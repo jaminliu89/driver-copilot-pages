@@ -1,4 +1,4 @@
-const CACHE = "driver-copilot-shell-a3b62eb66271";
+const CACHE = "driver-copilot-shell-6637e15e551e";
 const ROOT = new URL("./", self.location.href);
 const SHELL = ["./","./index.html","./styles.css","./app.mjs","./engine.mjs","./income.mjs","./store.mjs","./ocr.mjs","./manifest.webmanifest","./icon.svg","./icon-192.png","./icon-512.png"];
 self.addEventListener("install", (e) => {

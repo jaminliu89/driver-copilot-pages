@@ -1,5 +1,5 @@
 # 测试报告
-2026年09月08日。环境：macOS本机、Node 22、Chrome headless、375/768/1440视口；独立审查另使用CUA实际点击。运行产物指纹：a3b62eb66271。
+2026年09月08日。环境：macOS本机、Node 22、Chrome headless、375/768/1440视口；独立审查另使用CUA实际点击。运行产物指纹：6637e15e551e。
 
 ## 已通过的工程验证
 | 层次 | 结果 | 证据 |
@@ -10,7 +10,8 @@
 | 分享与隐私竞态 | 4/4 | test-evidence/share.json；真实图片POST、本机临时图删除、取消OCR、清除期间取消 |
 | 六张真实享道图 | 6/6在支持版式正确识别 | test-evidence/ocr-six-screens.json；真实识别，没有预设金额替换 |
 | 布局 | 375/768/1440无水平溢出 | test-evidence/layout-a11y.json；全部司机页面完成截图检查 |
-| 自动无障碍 | 六个二级页axe零违规 | test-evidence/layout-a11y.json；不等于人工屏幕阅读器验收 |
+| 自动无障碍 | 六个二级页＋已保存收入态axe零违规 | test-evidence/layout-a11y.json；不等于人工屏幕阅读器验收 |
+| 多页低保真 | 8/8可点击页面通过 | tests/final-check.mjs |
 | Mermaid | 7/7实际解析渲染 | docs/diagrams/*.svg，tests/render-diagrams.mjs |
 | 依赖 | npm audit完整依赖0项，生产依赖0项 | 本轮已升级存在公告的旧Playwright/Mermaid依赖 |
 | 构建隔离 | dist不含research/tests/私人原图/原对话 | build.mjs采用显式白名单；发布仓库仅复制dist |
@@ -30,7 +31,7 @@
 | 清除时OCR完成后重新出现预览 | 取消worker与代际隔离，真实OCR竞态回归通过 |
 | 重复IDB写入错误未正确传递 | 保存request错误，重复快照显示明确提示 |
 | 浏览器离线刷新后navigator.onLine误报true | 增加同源无缓存连接探测；真实离线刷新通过 |
-| 策略标题与保存收入列表层级跳级 | 补齐h2层级并用axe复查 |
+| 策略标题与保存收入列表层级跳级、占比图缺少ARIA角色 | 补齐h2和图形角色；保存收入态axe复查零违规 |
 
 测试脚本曾在保存/删除事务完成前立即刷新，产生假失败；已改为等成功UI后刷新，未通过删除测试或放松持久化断言“修复”功能。
 
