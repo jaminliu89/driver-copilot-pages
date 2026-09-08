@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>司机副驾 · 多页低保真</title
+  ><style>
+    body {
+      font: 18px system-ui;
+      margin: 0;
+      background: #eee;
+      color: #222;
+    }
+    header,
+    nav,
+    main {
+      max-width: 960px;
+      margin: auto;
+      padding: 20px;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    button,
+    a {
+      font: inherit;
+      padding: 12px;
+      color: inherit;
+    }
+    button {
+      border: 1px solid #777;
+      background: white;
+      cursor: pointer;
+    }
+    button[aria-current] {
+      background: #333;
+      color: white;
+    }
+    .phone {
+      max-width: 390px;
+      margin: auto;
+      background: white;
+      border: 2px solid #777;
+      min-height: 570px;
+      padding: 24px;
+    }
+    .box {
+      border: 1px solid #aaa;
+      padding: 20px;
+      margin: 16px 0;
+    }
+    .action {
+      font-size: 80px;
+      text-align: center;
+    }
+    p {
+      line-height: 1.7;
+    }
+    footer {
+      text-align: center;
+      padding: 24px;
+    }
+  </style>
+  <header>
+    <h1>司机收益副驾</h1>
+    <p>低保真交互原型。图中内容是场景示意，所有司机页面不要求手填分析数据。</p>
+  </header>
+  <nav id="nav"></nav>
+  <main><div class="phone" id="screen"></div></main>
+  <footer>
+    主旅程：打开 → 看行动 → 停车后看依据。研究层不出现在司机导航。
+  </footer>
+  <script>
+    const pages = {
+      首页: '<p>西安 · 当前时间</p><div class="action">休</div><h2>把午间留给自己</h2><p>时段参考，尚无实时收益证据。</p><div class="box">一句理由／有效时间／数据状态</div><button onclick="go(\'策略\')">查看今日策略</button>',
+      地图: '<h2>收益地图</h2><div class="box" style="height:220px">西安区域示意<br>北站／高新／曲江／机场<br><br>收益证据不足时显示“待验证”<br>不绘制虚假热力图</div><button onclick="go(\'状态\')">查看定位状态</button>',
+      策略: '<h2>今日策略</h2><div class="box">现在：时段参考<br>跑／换／休／调／撤</div><p>下个窗口与休息安排</p><p>听单设置：停车后查看平台；不自动控制</p><button onclick="go(\'事件\')">查看城市事件</button>',
+      收入: '<h2>收入结构</h2><p>尚未导入。首页可以直接使用。</p><div class="box">停车后选图 → 本机识别 → 核对 → 一键保存</div><p>行程＋奖励＋增项−扣减＋增值</p><p>平台流水独立展示，成本缺失时不显示净收入</p>',
+      事件: '<h2>城市事件</h2><div class="box">天气：来源与更新时间</div><div class="box">活动／航班／高铁：未接入时明确为空</div><p>事件结束或消息过期后撤销建议</p>',
+      状态: '<h2>今日状态</h2><div class="box">网络／定位／数据时效</div><p>可选：开始休息计时，不等于在线工时</p><button onclick="go(\'设置\')">自动设置</button>',
+      设置: '<h2>自动设置</h2><div class="box">允许定位（可跳过）</div><div class="box">驾驶模式：只读大字</div><div class="box">安装说明／清除本机数据</div>',
+      研究: '<h2>内部研究层</h2><p>仅供团队，不部署到司机入口</p><div class="box">五行动情景回放</div><div class="box">特惠开关／机场等待／午间休息实验</div><p>真实效果待验证，不伪造 benchmark</p>',
+    };
+    function go(k) {
+      document.querySelector("#screen").innerHTML = pages[k];
+      document.querySelector("#nav").innerHTML = Object.keys(pages)
+        .map(
+          (x) =>
+            `<button ${x === k ? 'aria-current="page"' : ""} onclick="go('${x}')">${x}</button>`,
+        )
+        .join("");
+      location.hash = k;
+    }
+    go(
+      decodeURIComponent(location.hash.slice(1)) in pages
+        ? decodeURIComponent(location.hash.slice(1))
+        : "首页",
+    );
+  </script>
+</html>
