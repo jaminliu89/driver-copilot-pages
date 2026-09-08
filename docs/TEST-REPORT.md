@@ -4,7 +4,8 @@
 ## 已通过的工程验证
 | 层次 | 结果 | 证据 |
 |---|---|---|
-| 领域与缺陷回归 | 17/17 | tests/*.test.mjs；金额、日期、时区、证据失效、五行动 |
+| 领域与缺陷回归 | 17/17 | tests/*.node.mjs；金额、日期、时区、证据失效、五行动 |
+| Pages线上浏览器链路 | 14/14，真实公开URL | 私有源码test-evidence/online-browser.json；运行指纹6637e15e551e |
 | 主浏览器链路 | 14/14 | test-evidence/browser.json；真实OCR、保存、刷新、去重、离线、删除、隔离 |
 | 驾驶与错误边界 | 6/6 | test-evidence/guards.json；后台恢复定位、移动驾驶锁、弹窗关闭、拒绝定位、天气失败 |
 | 分享与隐私竞态 | 4/4 | test-evidence/share.json；真实图片POST、本机临时图删除、取消OCR、清除期间取消 |
@@ -44,6 +45,11 @@ Impeccable机械检测提示其图片comp流程未闭合。本轮按用户指定
 享道官方收入/订单同步、实时路况、机场/高铁/活动feed及实测区域收益未接入。现在运行的是西安时段参考＋公开天气＋可选本机OCR。收益地图明确显示待验证；没有合格证据时不会发换区/撤离的生产建议。内部五行动回放只验证规则。
 没有真实司机实验，不宣称增收、净时薪提升、减少工时或PMF成立。
 
+## CI隔离修正
+首轮根项目Vitest误扫描司机模块的Node原生测试，报“No test suite found”，原有8项业务测试本身通过。司机测试改用.node.mjs文件名并由专属npm test显式执行；保留全部17项，未删除或降低测试。根项目源码和测试配置不变。
+
 ## 发布核验
 私有Mobility-Lab的Pages权限检查返回422套餐限制，保留私有。静态发布采用单独公开仓库driver-copilot-pages。
 发布后的URL、远端版本与在线核验结果见DEPLOYMENT.md。CI只验证其实际执行的单元测试、依赖审计和构建，不替代本机真实截图E2E。
+
+2026年09月08日最终核验：源码ac473bd的原项目CI与Driver Copilot Build均success；公开Pages真实浏览器14项通过，详情见DEPLOYMENT.md。本文中的test-evidence位于私有源码driver/docs/，未随公开静态站点发布。
